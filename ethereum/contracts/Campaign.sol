@@ -14,7 +14,7 @@ contract CampaignFactory {
 }
 
 contract Campaign {
-    
+
     struct Request {
         string description;
         uint256 value;
@@ -72,7 +72,7 @@ contract Campaign {
         request.approvalCount++;
     }
 
-    function finilizeRequest(uint256 index) public restricted {
+    function finalizeRequest(uint256 index) public restricted {
         Request storage request = requests[index];
 
         require(request.approvalCount > (approversCount / 2));

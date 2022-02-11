@@ -44,7 +44,6 @@ describe('Campaigns', () => {
     })
 
     it('donate success', async () => {
-        
         await campaign.methods.contribute().send({
             value: '101',
             from: accounts[1]
@@ -52,7 +51,60 @@ describe('Campaigns', () => {
 
         const isContributor = await campaign.methods.approvers(accounts[1]).call();
         assert(isContributor);
+    })
 
+    it('require minimun contribution', async () => {
+        try {
+            await campaign.methods.contribute().send({
+                value: '50',
+                from: accounts[2]
+            });
+            assert(false)
+        } catch (error) {
+            assert(error)
+        }
+    })
+
+    // createRequest(
+    //     string description,
+    //     uint256 value,
+    //     address recipient
+    // ) 
+
+    it('allow manager to make a request', async () => {
+        await campaign.methods.createRequest("This is a test request", "100", accounts[2]).send({
+            from: accounts[0],
+            gas: '1000000'
+        })
+        const request = await campaign.methods.requests(0).call();
+        assert.equal('This is a test request', request.description);
+    })
+
+    it('processes requests', async () => {
+
+        await campaign.methods.contribute().send({
+            from: accounts[0],
+            value: web3.utils.toWei('10', 'ether')
+        })
+
+        await campaign.methods.createRequest('A', web3.utils.toWei('5', 'ether'), accounts[1])
+            .send({ from: accounts[0], gas: '1000000' })
+
+        await campaign.methods.approveRequest(0).send({
+            from: accounts[0],
+            gas: '1000000'
+        });
+
+        await campaign.methods.finalizeRequest(0).send({
+            from: accounts[0],
+            gas: '1000000'
+        })
+
+        let balance = await web3.eth.getBalance(accounts[1]);
+        balance = web3.utils.fromWei(balance, 'ether');
+        balance = parseFloat(balance);
+
+        assert(balance > 104)
 
     })
 })
