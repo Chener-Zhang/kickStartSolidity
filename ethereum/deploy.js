@@ -11,7 +11,7 @@ const deploy = async () => {
 
     console.log('attemp to deloy', account[0])
 
-    const result = await new web3.eth.Contract(JSON.parse(compiledFactory.interface)).deploy({ data: bytecode }).send({ gas: '1000000', from: account[0] })
+    const result = await new web3.eth.Contract(JSON.parse(compiledFactory.interface)).deploy({ data: compiledFactory.bytecode }).send({ gas: '1000000', from: account[0] })
 
 
     console.log("Address", result.options.address);
@@ -21,3 +21,6 @@ const deploy = async () => {
 
 
 deploy();
+
+// attemp to deloy 0x434356D0d6Cfa8b9aE18617546D6dc45362f48A0
+// Address 0xD8b375CedC22C8ae454B44fbDa027F5be12484Bd
