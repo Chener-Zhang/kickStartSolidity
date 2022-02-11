@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/Chener-Zhang/kickStartSolidity#readme",
   "dependencies": {
+    "@truffle/hdwallet-provider": "^2.0.3",
     "fs-extra": "^10.0.0",
     "ganache-cli": "^6.12.2",
     "mocha": "^9.2.0",
