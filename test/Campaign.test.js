@@ -87,6 +87,7 @@ describe('Campaigns', () => {
             value: web3.utils.toWei('10', 'ether')
         })
 
+        //This request to the vendor from the manager account 
         await campaign.methods.createRequest('A', web3.utils.toWei('5', 'ether'), accounts[1])
             .send({ from: accounts[0], gas: '1000000' })
 
