@@ -8,12 +8,13 @@ contract CampaignFactory {
         deployedCampaigns.push(newCampaign);
     }
 
-    function getDeplyedCampaigns() public view returns (address[]) {
+    function getDeployedCampaigns() public view returns (address[]) {
         return deployedCampaigns;
     }
 }
 
 contract Campaign {
+    
     struct Request {
         string description;
         uint256 value;
